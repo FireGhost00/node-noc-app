@@ -3,4 +3,3 @@ dist/
 nodemon.json
 logs/
 .env
-.env.template
