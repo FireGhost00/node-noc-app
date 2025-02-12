@@ -1,19 +1,25 @@
 
 
-export enum logServerityLevel{
-    low = 'low',
+export enum LogServerityLevel{
+    low    = 'low',
     medium = 'medium',
-    high = 'high',
+    high   = 'high',
 }
 
 
 
 
-export class logEntity {
+export class LogEntity {
 
-    public level: string;
+    public level: LogServerityLevel;
     public message: string;
     public createdAt: Date;
+
+    constructor(level: LogServerityLevel, message: string) {
+        this.level = level;
+        this.message = message;
+        this.createdAt = new Date();
+    }
 
 
 }
