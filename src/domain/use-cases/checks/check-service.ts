@@ -11,8 +11,8 @@ export class CheckService implements CheckServiceUseCase {
 
   constructor(
     private readonly LogRepository: LogRepository,
-    private readonly successCallback: SuccessCallback, 
-    private readonly errorCallback: ErrorCallback) {
+    private readonly successCallback: SuccessCallback | undefined, 
+    private readonly errorCallback: ErrorCallback | undefined) {
 
     
 
@@ -31,13 +31,13 @@ export class CheckService implements CheckServiceUseCase {
         const log = new LogEntity(LogServerityLevel.low, `Service ${url} is working`);
         await this.LogRepository.saveLog(log);
 
-        this.successCallback();
+        this.successCallback && this.successCallback();
         return true;
     } catch (error) {
        const errorMesssage = `${url} is not ok. ${error}`;
         const log = new LogEntity(LogServerityLevel.high, errorMesssage);
         this.LogRepository.saveLog(log);
-        this.errorCallback(errorMesssage);
+        this.errorCallback && this.errorCallback(errorMesssage);
         return false;
     }
 
