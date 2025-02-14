@@ -1,27 +1,18 @@
-
-import nodemailer from 'nodemailer';
-import { envs } from '../../config/plugins/envs.plugins';
-
-import path from 'path';
-import { LogRepository } from '../../domain/repository/log.repository';
-import { LogEntity, LogServerityLevel } from '../../domain/entities/log.entity';
-
-
+import nodemailer from "nodemailer";
+import { envs } from "../../config/plugins/envs.plugins";
+import { LogEntity, LogServerityLevel } from "../../domain/entities/log.entity";
 
 interface SendMailOptions {
-    to: string | string[];
-    subject: string;
-    htmlBody: string;
-    attachments?: Attachement[];
+  to: string | string[];
+  subject: string;
+  htmlBody: string;
+  attachments?: Attachement[];
 }
 
 interface Attachement {
-    filename: string;
-    path: string;
+  filename: string;
+  path: string;
 }
-
-
-
 
 export class EmailService {
   private transporter = nodemailer.createTransport({
@@ -32,14 +23,7 @@ export class EmailService {
     },
   });
 
-constructor(
-    private readonly LogRepository: LogRepository,
-) {}
-
-
-
-
-
+  constructor() {}
 
   async sendEmail(options: SendMailOptions): Promise<boolean> {
     const { to, subject, htmlBody, attachments = [] } = options;
@@ -52,28 +36,27 @@ constructor(
         attachments: attachments,
       });
 
+      const log = new LogEntity({
+        level: LogServerityLevel.low,
+        message: `Email sent to ${to}`,
+        origin: "email-service.ts",
+      });
+      console.log(sentInformation);
 
-        const log =new LogEntity({
-            level: LogServerityLevel.low,
-            message: `Email sent to ${to}`,
-            origin: "email-service.ts",
-        });
-        console.log(sentInformation);
-        await this.LogRepository.saveLog(log);
       return true;
     } catch (error) {
-        const log =new LogEntity({
-            level: LogServerityLevel.high,
-            message: `Email not sent to ${to}`,
-            origin: "email-service.ts",
-        });
-        console.log(error);
-        await this.LogRepository.saveLog(log);
+      const log = new LogEntity({
+        level: LogServerityLevel.high,
+        message: `Email not sent to ${to}`,
+        origin: "email-service.ts",
+      });
+      console.log(error);
+
       return false;
     }
   }
 
-async  sendEmailWithSystemLogs(to: string | string[]) {
+  async sendEmailWithSystemLogs(to: string | string[]) {
     const subject = "Logs de sistema - test";
     const htmlBody = `<!DOCTYPE html>
 <html lang="es">
@@ -140,12 +123,12 @@ async  sendEmailWithSystemLogs(to: string | string[]) {
 </html>
         `;
 
-    const attachements:Attachement[] = [
+    const attachements: Attachement[] = [
       { filename: "logs-all.log", path: "logs/logs-all.log" },
       { filename: "logs-high.log", path: "logs/logs-high.log" },
       { filename: "logs-medium.log", path: "logs/logs-medium.log" },
     ];
 
-    return this.sendEmail({ to, subject,htmlBody,attachments: attachements });
+    return this.sendEmail({ to, subject, htmlBody, attachments: attachements });
   }
 }
