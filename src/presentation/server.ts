@@ -1,7 +1,7 @@
 import { envs } from '../config/plugins/envs.plugins';
 import { LogRepository } from '../domain/repository/log.repository';
 import { CheckService } from '../domain/use-cases/checks/check-service';
-import { FileSystemDataSource } from '../infrastructure/datasources/file-system.datasource';
+import { FileSystemDatasource } from '../infrastructure/datasources/file-system.datasource';
 import { LogRepositoryImpl } from '../infrastructure/repositories/log.repository.impl';
 import { CronService } from './cron/cron-service';
 import { EmailService } from './email/email.service';
@@ -9,7 +9,7 @@ import { EmailService } from './email/email.service';
 
 
 const fileSystemLogRepository = new LogRepositoryImpl(
-    new FileSystemDataSource()
+    new FileSystemDatasource()
 );
   
   
@@ -22,7 +22,7 @@ export class Server {
 
       
         // mandar mail
-       const emailService = new EmailService();
+       const emailService = new EmailService(fileSystemLogRepository);
       // emailService.sendEmail({
       //     to: "realgomez10@gmail.com",
       //     subject: "Logs de sistema - test",
@@ -33,7 +33,7 @@ export class Server {
       //     `
       // });
      
-      //emailService.sendEmailWithSystemLogs("realgomez10@gmail.com");
+      emailService.sendEmailWithSystemLogs("realgomez10@gmail.com");
 
     // CronService.createJob(
     //     "*/5 * * * * *",
