@@ -17,24 +17,24 @@ export class Server {
     public static start() {
     console.log("Server started");
 
+        // mandar mail
 
-
-    CronService.createJob(
-        "*/5 * * * * *",
-        () => {
-            const url = "http://google.com";
-            new CheckService(
-                fileSystemLogRepository,
-                () => {
-                    console.log(`Service checked: ${url}`);
-                },
-                (error) => {
-                    console.error(`Error on check service: ${error}`);
-                }
-            ).execute(url)
-            //new CheckService().execute("http://localhost:3001")
-        }
-    );
+    // CronService.createJob(
+    //     "*/5 * * * * *",
+    //     () => {
+    //         const url = "http://google.com";
+    //         new CheckService(
+    //             fileSystemLogRepository,
+    //             () => {
+    //                 console.log(`Service checked: ${url}`);
+    //             },
+    //             (error) => {
+    //                 console.error(`Error on check service: ${error}`);
+    //             }
+    //         ).execute(url)
+    //         //new CheckService().execute("http://localhost:3001")
+    //     }
+    // );
  
    
   }
