@@ -33,6 +33,9 @@ export class LogEntity {
    * @throws Will throw an error if the JSON string cannot be parsed.
    */
   static fromJson = (json: string): LogEntity => {
+
+    json = (json === '') ? '{}' : json;
+
     const { level, message, createdAt, origin } = JSON.parse(json);
     const log = new LogEntity({
       level,
