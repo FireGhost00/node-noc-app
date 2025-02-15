@@ -1,19 +1,15 @@
-
-
-export enum LogServerityLevel{
-    low    = 'low',
-    medium = 'medium',
-    high   = 'high',
+export enum LogServerityLevel {
+  low = "low",
+  medium = "medium",
+  high = "high",
 }
-
 
 export interface LogEntityOptions {
-    level: LogServerityLevel;
-    message: string;
-    origin: string;
-    createdAt?: Date;
+  level: LogServerityLevel;
+  message: string;
+  origin: string;
+  createdAt?: Date;
 }
-
 
 export class LogEntity {
   public level: LogServerityLevel;
@@ -38,6 +34,17 @@ export class LogEntity {
    */
   static fromJson = (json: string): LogEntity => {
     const { level, message, createdAt, origin } = JSON.parse(json);
+    const log = new LogEntity({
+      level,
+      message,
+      createdAt,
+      origin,
+    });
+    return log;
+  };
+
+  static fromObject = (object: { [key: string]: any }): LogEntity => {
+    const { level, message, createdAt, origin } = object;
     const log = new LogEntity({
       level,
       message,

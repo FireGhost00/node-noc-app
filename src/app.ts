@@ -26,8 +26,8 @@ async function main() {
    // await newLog.save();
    // console.log('Log created', newLog);
 
-   const logs = await LogModel.find();
-   console.log('Logs', logs);
+   //const logs = await LogModel.find();
+   //console.log('Logs', logs);
    
    //Server.start();
   
