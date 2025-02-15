@@ -1,6 +1,6 @@
 import { $Enums, PrismaClient, SeverityLevel } from "@prisma/client";
-import { LogDataSource } from "../../domain/datasources/log.datasource";
-import { LogEntity, LogServerityLevel } from "../../domain/entities/log.entity";
+import { LogDatasource } from "../../domain/datasources/log.datasource";
+import { LogEntity, LogSeverityLevel } from "../../domain/entities/log.entity";
 
 const prismaClient = new PrismaClient();
 
@@ -11,7 +11,7 @@ const serverityEnum = {
 }
 
 
-export class PostgresLogDataSource implements LogDataSource {
+export class PostgresLogDataSource implements LogDatasource {
 
 
 
@@ -29,7 +29,7 @@ export class PostgresLogDataSource implements LogDataSource {
     
     
     }
-    async getLogs(severityLevel: LogServerityLevel): Promise<LogEntity[]> {
+    async getLogs(severityLevel: LogSeverityLevel): Promise<LogEntity[]> {
         const level = serverityEnum[severityLevel as keyof typeof serverityEnum];
         const dbLogs = await prismaClient.logModel.findMany({
             where: {level}

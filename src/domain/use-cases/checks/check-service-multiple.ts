@@ -1,4 +1,4 @@
-import { LogEntity, LogServerityLevel } from '../../entities/log.entity';
+import { LogEntity, LogSeverityLevel } from '../../entities/log.entity';
 import { LogRepository } from '../../repository/log.repository';
 interface CheckServiceMultipleUseCase {
   execute(url: string): Promise<boolean>;
@@ -38,7 +38,7 @@ export class CheckServiceMultiple implements CheckServiceMultipleUseCase {
 
       //   const log = new LogEntity({LogServerityLevel.low, `Service ${url} is working`, originName, createdAt});
       const log = new LogEntity({
-        level: LogServerityLevel.low,
+        level: LogSeverityLevel.low,
         message: `Service ${url} is working`,
         origin: originName
       });
@@ -50,7 +50,7 @@ export class CheckServiceMultiple implements CheckServiceMultipleUseCase {
     } catch (error) {
       const errorMesssage = `${url} is not ok. ${error}`;
       const log = new LogEntity({
-        level: LogServerityLevel.high,
+        level: LogSeverityLevel.high,
         message: errorMesssage,
         origin: originName
       });
