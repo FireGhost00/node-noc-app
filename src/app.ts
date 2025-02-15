@@ -51,6 +51,6 @@ async function main() {
    //const logs = await LogModel.find();
    //console.log('Logs', logs);
    
-   //Server.start();
+   Server.start();
   
 }
