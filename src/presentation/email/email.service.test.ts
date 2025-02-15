@@ -19,7 +19,7 @@ describe( 'EmailService', () => {
 
 
     const options: SendMailOptions = {
-      to: 'fernando@google.com',
+      to: 'n00gomez00@gmail.com',
       subject: 'Test',
       htmlBody: '<h1>Test</h1>'
     };
@@ -30,14 +30,14 @@ describe( 'EmailService', () => {
       attachments: expect.any( Array ),
       html: "<h1>Test</h1>",
       subject: "Test",
-      to: "fernando@google.com",
+      to: "n00gomez00@gmail.com",
     } );
 
   } );
 
   test( 'should send email with attachements', async () => {
 
-    const email = 'fernando@google.com';
+    const email = 'n00gomez00@gmail.com';
     await emailSevice.sendEmailWithFileSystemLogs( email );
 
 
