@@ -3,5 +3,8 @@ dist/
 nodemon.json
 logs/
 .env
+.env.test
 /mongo
 /postgres
+/mongo-test
+/postgres-test
